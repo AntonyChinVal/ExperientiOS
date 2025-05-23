@@ -11,6 +11,8 @@ import SwiftUI
 @main
 struct ExperientApp: App {
     let container = DIContainer.shared
+    let toastManager = ToastManager()
+    let alertManager = AlertManager()
 
     init() {
         AppContainer.registerDependencies()
@@ -23,6 +25,8 @@ struct ExperientApp: App {
                     authRepository: self.container.resolve(AuthRepository.self),
                     userRepository: self.container.resolve(UserRepository.self)
                 ))
+                .environmentObject(toastManager)
+                .environmentObject(alertManager)
         }
     }
 }

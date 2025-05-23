@@ -14,6 +14,12 @@ struct RootView: View {
     @EnvironmentObject
     var auth: AuthViewModel
 
+    @EnvironmentObject
+    var toast: ToastManager
+
+    @EnvironmentObject
+    var alert: AlertManager
+
     var body: some View {
         NavigationStack(path: self.$coordinator.path) {
             Group {
@@ -38,5 +44,7 @@ struct RootView: View {
                 self.coordinator.reset()
             }
         }
+        .toast(isPresented: toast.isVisible, message: toast.message)
+        .alertOverlay(manager: alert)
     }
 }

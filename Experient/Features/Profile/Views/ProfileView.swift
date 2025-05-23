@@ -8,12 +8,30 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject
-    private var profile = ProfileViewModel()
+    @EnvironmentObject
+    var auth: AuthViewModel
+
+    @EnvironmentObject
+    var toast: ToastManager
+
+    @EnvironmentObject
+    var alert: AlertManager
 
     var body: some View {
-        Text(self.profile.greeting)
-            .font(AppTheme.Typography.body1)
-            .navigationTitle("Profile")
+        VStack(spacing: 20) {
+            Text("Welcome to your profile, \(self.auth.user?.displayName ?? "")")
+                .font(AppTheme.Typography.medium1)
+            Button("Refres Token Success") {
+                self.auth.refreshToken(isSuccess: true)
+                toast.show(message: "Token Refreshed Successfully")
+            }.buttonStyle(ThemedButtonStyle(configuration: AppTheme.Buttons.secondary))
+            Button("Refresh Token Error") {
+                self.auth.refreshToken(isSuccess: false)
+                alert.show(title: "Session Expired", message: "Please log in again.")
+            }
+            .buttonStyle(ThemedButtonStyle(configuration: AppTheme.Buttons.primary))
+        }
+        .padding()
+        .navigationTitle("Profile")
     }
 }

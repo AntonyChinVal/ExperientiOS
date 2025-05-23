@@ -12,9 +12,9 @@ class AuthRepositoryImpl: AuthRepository {
     private let network: NetworkService
     private let loginEndpoint = URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/auth")!
     private let refreshSuccessEndpoint =
-        URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/auth/refreshSuccess")!
+        URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/refreshSuccess")!
     private let refreshErrorEndpoint =
-        URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/auth/refreshError")!
+        URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/refreshError")!
     private let getUserEndpoint = URL(string: "https://68302087f504aa3c70f66864.mockapi.io/experient/api/v1/user")!
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
