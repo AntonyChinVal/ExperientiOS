@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject var auth: AuthViewModel
+    @StateObject
+    var coordinator = AppCoordinator()
+
+    @EnvironmentObject
+    var auth: AuthViewModel
 
     var body: some View {
-        NavigationStack {
-            if auth.isAuthenticated {
-                HomeView()
-            } else {
-                LoginView()
+        NavigationStack(path: self.$coordinator.path) {
+            Group {
+                if self.auth.isAuthenticated {
+                    HomeView()
+                } else {
+                    LoginView()
+                }
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .home:
+                    HomeView()
+                case .profile:
+                    ProfileView()
+                }
+            }
+        }
+        .environmentObject(self.coordinator)
+        .onChange(of: self.auth.isAuthenticated) {
+            if !self.auth.isAuthenticated {
+                self.coordinator.reset()
             }
         }
     }

@@ -26,18 +26,21 @@ struct ButtonStyleConfiguration {
     }
 }
 
-
 struct ThemedButtonStyle: ButtonStyle {
     var configuration: ButtonStyleConfiguration
-    var isEnabled: Bool = true
+    var isEnabled = true
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
-            .background(isEnabled ? self.configuration.backgroundColor : self.configuration.disabledBackgroundColor)
-            .foregroundColor(isEnabled ? self.configuration.foregroundColor : self.configuration.disabledForegroundColor)
+            .background(self.isEnabled ? self.configuration.backgroundColor : self.configuration
+                .disabledBackgroundColor
+            )
+            .foregroundColor(self.isEnabled ? self.configuration.foregroundColor : self.configuration
+                .disabledForegroundColor
+            )
             .cornerRadius(8)
-            .opacity(isEnabled ? 1.0 : 0.6)
-            .scaleEffect(configuration.isPressed && isEnabled ? 0.96 : 1.0)
+            .opacity(self.isEnabled ? 1.0 : 0.6)
+            .scaleEffect(configuration.isPressed && self.isEnabled ? 0.96 : 1.0)
     }
 }

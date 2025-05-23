@@ -15,12 +15,12 @@ struct ThemedTextFieldStyle: TextFieldStyle {
 
     func _body(configuration: TextField<_Label>) -> some View {
         configuration
-            .padding(padding)
-            .background(backgroundColor)
-            .foregroundColor(foregroundColor)
-            .cornerRadius(cornerRadius)
+            .padding(self.padding)
+            .background(self.backgroundColor)
+            .foregroundColor(self.foregroundColor)
+            .cornerRadius(self.cornerRadius)
             .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
+                RoundedRectangle(cornerRadius: self.cornerRadius)
                     .stroke(Color.gray.opacity(0.3), lineWidth: 1)
             )
     }

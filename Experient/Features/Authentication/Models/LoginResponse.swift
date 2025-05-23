@@ -1,5 +1,5 @@
 //
-//  AuthResponse.swift
+//  LoginResponse.swift
 //  Experient
 //
 //  Created by Antony Chinchay Valdivia on 23/05/25.

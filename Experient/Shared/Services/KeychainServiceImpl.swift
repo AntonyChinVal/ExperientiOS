@@ -32,7 +32,8 @@ class KeychainServiceImpl: KeychainService {
         var result: AnyObject?
         if SecItemCopyMatching(query, &result) == errSecSuccess,
            let data = result as? Data,
-           let string = String(data: data, encoding: .utf8) {
+           let string = String(data: data, encoding: .utf8)
+        {
             return string
         }
         return nil

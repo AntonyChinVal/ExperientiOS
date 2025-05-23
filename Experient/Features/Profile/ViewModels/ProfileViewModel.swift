@@ -8,5 +8,6 @@
 import Foundation
 
 class ProfileViewModel: ObservableObject {
-    @Published var greeting = "This is your profile."
+    @Published
+    var greeting = "This is your profile."
 }

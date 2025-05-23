@@ -1,0 +1,38 @@
+# .swiftformat — for SwiftUI projects aligned with SwiftLint
+
+# General formatting behavior
+
+--indent 4
+--allman false
+--commas inline
+--wraparguments beforefirst
+--wrapcollections beforefirst
+--semicolons never
+--self remove
+--trimwhitespace always
+--ranges spaced
+--patternlet inline
+--stripunusedargs closure-only
+--hexliterals lowercase
+--decimalgrouping ignore
+--modifierorder acl,override,final
+
+# Line length
+
+--maxwidth 120
+
+# Optional: prevent aggressive rewrites that may break SwiftUI previews
+
+--disable redundantReturn
+--disable redundantSelf
+--disable hoistPatternLet
+
+# Target Swift version (optional, but good practice)
+
+--swiftversion 5.9
+
+# Exclude common folders
+
+--exclude Carthage
+--exclude Pods
+--exclude .build

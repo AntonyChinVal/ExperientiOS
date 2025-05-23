@@ -4,48 +4,85 @@
 //
 //  Created by Antony Chinchay Valdivia on 23/05/25.
 //
-
 import Foundation
 
+@MainActor
 class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
     @Published var user: User?
     @Published var isLoading = false
 
-    private let repository: AuthRepository
+    private let authRepository: AuthRepository
+    private let userRepository: UserRepository
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
 
-    init(repository: AuthRepository) {
-        self.repository = repository
-        checkAuthentication()
+    init(authRepository: AuthRepository, userRepository: UserRepository) {
+        self.authRepository = authRepository
+        self.userRepository = userRepository
+        self.checkAuthentication()
     }
 
-    @MainActor
     func login(username: String, password: String) {
         Task {
             self.isLoading = true
             defer { self.isLoading = false }
 
-            if let response = await repository.login(username: username, password: password) {
+            do {
+                let response = try await authRepository.login(username: username, password: password)
                 self.user = response.user
-                repository.saveToken(response.accessToken, key: accessTokenKey)
-                repository.saveToken(response.refreshToken, key: refreshTokenKey)
                 self.isAuthenticated = true
+            } catch {
+                print("Login failed with error: \(error)")
+                self.isAuthenticated = false
             }
         }
     }
-    
+
+    func refreshToken(isSuccess: Bool) {
+        Task {
+            self.isLoading = true
+            defer { self.isLoading = false }
+
+            do {
+                _ = try await authRepository.refreshToken(isSuccess: isSuccess)
+                self.isAuthenticated = true
+            } catch {
+                print("Refresh token failed with error: \(error)")
+                self.isAuthenticated = false
+            }
+        }
+    }
+
     func logout() {
-        repository.deleteToken(key: accessTokenKey)
-        repository.deleteToken(key: refreshTokenKey)
-        self.isAuthenticated = false
-        self.user = nil
+        Task {
+            self.isLoading = true
+            defer { self.isLoading = false }
+
+            do {
+                try await authRepository.logout()
+                isAuthenticated = false
+                user = nil
+            } catch {
+                print("Logout failed with error: \(error)")
+            }
+        }
     }
 
     private func checkAuthentication() {
-        if repository.readToken(key: accessTokenKey) != nil {
-            self.isAuthenticated = true
+        if authRepository.readToken() == nil {
+            self.isAuthenticated = false
+            return
+        }
+        self.isAuthenticated = true
+        if self.user == nil {
+            Task {
+                do {
+                    self.user = try await userRepository.getUser()
+                } catch {
+                    print("Failed to fetch user: \(error)")
+                }
+            }
         }
     }
 }

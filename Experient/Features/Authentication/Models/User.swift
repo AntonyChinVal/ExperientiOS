@@ -8,4 +8,3 @@
 struct User: Codable {
     let username, lastName, firstName, displayName, emailAddress: String
 }
-

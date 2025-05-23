@@ -8,15 +8,15 @@
 import SwiftUICore
 import UIKit
 
-struct AppTheme {
-    struct Typography {
+enum AppTheme {
+    enum Typography {
         static let body1 = Font.system(size: 16)
         static let body2 = Font.system(size: 14)
         static let medium1 = Font.system(size: 16, weight: .medium)
         static let medium2 = Font.system(size: 14, weight: .medium)
     }
 
-    struct Buttons {
+    enum Buttons {
         static let primary = ButtonStyleConfiguration(
             backgroundColor: .blue,
             foregroundColor: .white
@@ -27,8 +27,8 @@ struct AppTheme {
             foregroundColor: .white
         )
     }
-    
-    struct TextFields {
+
+    enum TextFields {
         static let defaultStyle = ThemedTextFieldStyle(
             backgroundColor: Color(UIColor.secondarySystemBackground),
             foregroundColor: .primary,

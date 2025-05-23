@@ -6,8 +6,8 @@
 //
 
 protocol AuthRepository {
-    func login(username: String, password: String) async -> AuthResponse?
-    func readToken(key: String) -> String?
-    func saveToken(_ token: String, key: String)
-    func deleteToken(key: String)
+    func login(username: String, password: String) async throws -> AuthResponse
+    func refreshToken(isSuccess: Bool) async throws -> RefreshResponse
+    func logout() async throws
+    func readToken() -> String?
 }

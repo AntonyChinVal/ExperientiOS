@@ -5,17 +5,24 @@
 //  Created by Antony Chinchay Valdivia on 23/05/25.
 //
 
-import SwiftUI
 import Security
+import SwiftUI
 
 @main
-struct TestApp: App {
-    private let container = AppContainer()
+struct ExperientApp: App {
+    let container = DIContainer.shared
+
+    init() {
+        AppContainer.registerDependencies()
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environmentObject(AuthViewModel(repository: container.authRepository))
+                .environmentObject(AuthViewModel(
+                    authRepository: self.container.resolve(AuthRepository.self),
+                    userRepository: self.container.resolve(UserRepository.self)
+                ))
         }
     }
 }
