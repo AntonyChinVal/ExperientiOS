@@ -17,6 +17,6 @@ enum APIConfig {
     }
     
     enum User {
-        static var getUser: URL { URL(string: "\(APIConfig.baseURL)/user")! }
+        static var getUser: URL { URL(string: "\(APIConfig.baseURL)/user/1")! }
     }
 }
