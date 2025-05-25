@@ -10,3 +10,11 @@ struct RefreshResponse: Codable {
     let accessToken: String
     let refreshToken: String
 }
+
+enum RefreshResponseMock {
+    static let sample = RefreshResponse(
+        authorized: true,
+        accessToken: "mock_access_token",
+        refreshToken: "mock_refresh_token"
+    )
+}

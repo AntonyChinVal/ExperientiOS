@@ -35,3 +35,13 @@ struct ProfileView: View {
         .navigationTitle("Profile")
     }
 }
+
+#Preview {
+    ProfileView()
+        .environmentObject(AuthViewModel(
+            authRepository: DIContainer.shared.resolve(AuthRepository.self),
+            userRepository: DIContainer.shared.resolve(UserRepository.self)
+        ))
+        .environmentObject(ToastManager())
+        .environmentObject(AlertManager())
+}

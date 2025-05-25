@@ -8,37 +8,17 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject
-    var coordinator = AppCoordinator()
-
-    @EnvironmentObject
-    var auth: AuthViewModel
-
-    @EnvironmentObject
-    var toast: ToastManager
-
-    @EnvironmentObject
-    var alert: AlertManager
+    @EnvironmentObject private var auth: AuthViewModel
+    @EnvironmentObject private var coordinator: AppCoordinator
+    @EnvironmentObject private var toast: ToastManager
+    @EnvironmentObject private var alert: AlertManager
 
     var body: some View {
-        NavigationStack(path: self.$coordinator.path) {
-            Group {
-                if self.auth.isAuthenticated {
-                    HomeView()
-                } else {
-                    LoginView()
-                }
-            }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .home:
-                    HomeView()
-                case .profile:
-                    ProfileView()
-                }
-            }
+        NavigationStack(path: $coordinator.path) {
+            content
+                .navigationDestination(for: Route.self, destination: destinationView)
         }
-        .environmentObject(self.coordinator)
+        .environmentObject(coordinator)
         .onChange(of: self.auth.isAuthenticated) {
             if !self.auth.isAuthenticated {
                 self.coordinator.reset()
@@ -46,5 +26,24 @@ struct RootView: View {
         }
         .toast(isPresented: toast.isVisible, message: toast.message)
         .alertOverlay(manager: alert)
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if auth.isAuthenticated {
+            HomeView()
+        } else {
+            LoginView()
+        }
+    }
+
+    @ViewBuilder
+    private func destinationView(for route: Route) -> some View {
+        switch route {
+        case .home:
+            HomeView()
+        case .profile:
+            ProfileView()
+        }
     }
 }

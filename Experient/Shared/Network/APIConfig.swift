@@ -15,7 +15,7 @@ enum APIConfig {
         static var refreshSuccess: URL { URL(string: "\(APIConfig.baseURL)/refreshSuccess")! }
         static var refreshError: URL { URL(string: "\(APIConfig.baseURL)/refreshError")! }
     }
-    
+
     enum User {
         static var getUser: URL { URL(string: "\(APIConfig.baseURL)/user/1")! }
     }

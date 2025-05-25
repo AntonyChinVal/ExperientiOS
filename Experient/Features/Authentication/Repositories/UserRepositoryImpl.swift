@@ -9,7 +9,7 @@ import Foundation
 
 class UserRepositoryImpl: UserRepository {
     private let network: NetworkService
-    
+
     init(network: NetworkService) {
         self.network = network
     }

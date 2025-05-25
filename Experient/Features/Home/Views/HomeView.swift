@@ -29,3 +29,12 @@ struct HomeView: View {
         .navigationTitle("Home")
     }
 }
+
+#Preview {
+    HomeView()
+        .environmentObject(AuthViewModel(
+            authRepository: DIContainer.shared.resolve(AuthRepository.self),
+            userRepository: DIContainer.shared.resolve(UserRepository.self)
+        ))
+        .environmentObject(AppCoordinator())
+}

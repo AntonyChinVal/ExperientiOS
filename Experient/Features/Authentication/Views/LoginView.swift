@@ -56,3 +56,11 @@ struct LoginView: View {
         .navigationTitle("Login")
     }
 }
+
+#Preview {
+    let authViewModel = AuthViewModel(
+        authRepository: AuthRepositoryMock(), userRepository: UserRepositoryMock()
+    )
+    LoginView()
+        .environmentObject(authViewModel)
+}

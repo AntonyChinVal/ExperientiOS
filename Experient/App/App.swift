@@ -13,6 +13,7 @@ struct ExperientApp: App {
     let container = DIContainer.shared
     let toastManager = ToastManager()
     let alertManager = AlertManager()
+    let coordinator = AppCoordinator()
 
     init() {
         AppContainer.registerDependencies()
@@ -25,6 +26,7 @@ struct ExperientApp: App {
                     authRepository: self.container.resolve(AuthRepository.self),
                     userRepository: self.container.resolve(UserRepository.self)
                 ))
+                .environmentObject(coordinator)
                 .environmentObject(toastManager)
                 .environmentObject(alertManager)
         }
